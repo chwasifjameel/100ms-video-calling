@@ -17,7 +17,7 @@ function JoinForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { userName = '', roomCode = '' } = inputValues;
+    const { name: userName = '', roomCode = '' } = inputValues;
 
     // use room code to fetch auth token
     const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode });

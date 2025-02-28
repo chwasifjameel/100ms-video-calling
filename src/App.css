@@ -3,6 +3,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
@@ -127,31 +135,21 @@ form h2,
 
 .control-bar {
   display: flex;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 15px;
+  gap: 10px;
   justify-content: center;
-  z-index: 10;
+  padding: 20px;
 }
 
-.control-bar > *:not(:first-child) {
-  margin-left: 8px;
+.btn-control,
+.btn-danger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.btn-control {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: 2px solid #37474f;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  text-align: center;
-  background-color: #607d8b;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  color: white;
-  cursor: pointer;
+.btn-control svg,
+.btn-danger svg {
+  font-size: 1.2em;
 }
 
 .hide {
@@ -160,4 +158,11 @@ form h2,
 
 .separator {
   font-size: 12px;
+}
+
+.placeholder-image {
+  background-color: #37474f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
