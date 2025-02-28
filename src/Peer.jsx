@@ -2,18 +2,25 @@ import {
   useVideo,
   useHMSStore,
   selectVideoTrackByPeerID,
+  selectAudioTrackByPeerID,
 } from '@100mslive/react-sdk';
-import { FaUser } from 'react-icons/fa';
+import {
+  FaUser,
+  FaMicrophone,
+  FaMicrophoneSlash,
+  FaHandPaper,
+} from 'react-icons/fa';
 
 function Peer({ peer }) {
   // Get the video track directly from the store
   const videoTrack = useHMSStore(selectVideoTrackByPeerID(peer.id)) || {};
 
-  console.log('videoTrack', videoTrack);
-
   const { videoRef } = useVideo({
     trackId: videoTrack?.id,
   });
+
+  // Get the audio track and check if it's muted
+  const audioTrack = useHMSStore(selectAudioTrackByPeerID(peer.id));
 
   return (
     <div className="peer-container">
@@ -36,6 +43,28 @@ function Peer({ peer }) {
       )}
       <div className="peer-name">
         {peer.name} {peer.isLocal ? '(You)' : ''}
+        {/* Microphone status icon next to name */}
+        {!audioTrack?.displayEnabled ? (
+          <FaMicrophoneSlash
+            className="status-icon muted"
+            title="Muted"
+            style={{ marginLeft: '5px' }}
+          />
+        ) : (
+          <FaMicrophone
+            className="status-icon"
+            title="Unmuted"
+            style={{ marginLeft: '5px' }}
+          />
+        )}
+        {/* Hand raised indicator */}
+        {peer.isHandRaised && (
+          <FaHandPaper
+            className="status-icon hand-raised"
+            title="Hand Raised"
+            style={{ marginLeft: '5px' }}
+          />
+        )}
       </div>
     </div>
   );
