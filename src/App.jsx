@@ -4,6 +4,7 @@ import JoinForm from './JoinForm';
 import Footer from './Footer';
 import Conference from './Conference';
 import { useEffect } from 'react';
+import Sidebar from './sidebar';
 import {
   selectIsConnectedToRoom,
   useHMSActions,
@@ -29,6 +30,7 @@ export default function App() {
         <>
           <Conference />
           <Footer />
+          <Sidebar />
         </>
       ) : (
         <JoinForm />

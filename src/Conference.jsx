@@ -6,12 +6,14 @@ function Conference() {
   const peers = useHMSStore(selectPeers);
   return (
     <div className="conference-section">
-      <h2>Conference</h2>
+      <h2>Mission Team Mobile Workshop</h2>
 
       <div className="peers-container">
-        {peers.map((peer) => (
-          <Peer key={peer.id} peer={peer} />
-        ))}
+        {peers
+          .sort((a, b) => a.roleName.localeCompare(b.roleName))
+          .map((peer) => (
+            <Peer key={peer.id} peer={peer} />
+          ))}
       </div>
     </div>
   );

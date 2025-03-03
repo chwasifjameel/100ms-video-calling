@@ -16,7 +16,7 @@ function Peer({ peer }) {
   const videoTrack = useHMSStore(selectVideoTrackByPeerID(peer.id)) || {};
 
   const { videoRef } = useVideo({
-    trackId: videoTrack?.id,
+    trackId: peer.videoTrack,
   });
 
   // Get the audio track and check if it's muted
@@ -27,7 +27,9 @@ function Peer({ peer }) {
       {videoTrack.displayEnabled ? (
         <video
           ref={videoRef}
-          className={`peer-video ${peer.isLocal ? 'local' : ''}`}
+          className={`peer-video ${peer.isLocal ? 'local' : ''} ${
+            peer.roleName.includes('room') ? 'sub-room-icon' : ''
+          }`}
           autoPlay
           muted
           playsInline
@@ -42,7 +44,7 @@ function Peer({ peer }) {
         </div>
       )}
       <div className="peer-name">
-        {peer.name} {peer.isLocal ? '(You)' : ''}
+        {peer.name} {peer.isLocal ? '(You)' : ''} {peer.roleName}
         {/* Microphone status icon next to name */}
         {!audioTrack?.displayEnabled ? (
           <FaMicrophoneSlash
