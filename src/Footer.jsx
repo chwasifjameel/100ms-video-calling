@@ -5,6 +5,7 @@ import {
   useAVToggle,
   useHMSActions,
   useHMSStore,
+  selectPeerScreenSharing,
 } from '@100mslive/react-sdk';
 import {
   BsMicFill,
@@ -13,6 +14,8 @@ import {
   BsCameraVideoOffFill,
   BsDoorOpenFill,
 } from 'react-icons/bs';
+import { LuScreenShare, LuScreenShareOff } from 'react-icons/lu';
+
 import { FaHandPaper } from 'react-icons/fa';
 
 function Footer() {
@@ -21,6 +24,7 @@ function Footer() {
   const localPeer = useHMSStore(selectLocalPeer);
   const hmsActions = useHMSActions();
   const isHandRaised = useHMSStore(selectHasPeerHandRaised(localPeer?.id));
+  const isScreenSharing = useHMSStore(selectPeerScreenSharing);
 
   const leaveCall = () => {
     hmsActions.leave();
@@ -34,6 +38,11 @@ function Footer() {
     }
   }, [hmsActions, isHandRaised]);
 
+  const toggleScreenShare = useCallback(async () => {
+    if (isScreenSharing) await hmsActions.stopScreenShare();
+    else await hmsActions.startScreenShare();
+  }, [hmsActions, isScreenSharing]);
+
   return (
     <div className="control-bar">
       <button className="btn-control" onClick={toggleAudio}>
@@ -46,6 +55,10 @@ function Footer() {
       </button>
       <button className="btn-control" onClick={toggleRaiseHand}>
         <FaHandPaper /> {isHandRaised ? 'Lower Hand' : 'Raise Hand'}
+      </button>
+      <button className="btn-control" onClick={toggleScreenShare}>
+        {isScreenSharing ? <LuScreenShareOff /> : <LuScreenShare />}{' '}
+        {isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
       </button>
       <button className="btn-danger" onClick={leaveCall}>
         <BsDoorOpenFill /> Leave Call
